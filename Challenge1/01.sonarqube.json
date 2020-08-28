@@ -1,0 +1,48 @@
+[
+  {
+    "name": "sonarqube",
+    "essential": true,
+    "image": "sonarqube:7.9-community",
+    "memory": 2048,
+    "cpu": 2048,
+    "ulimits": [
+      {
+        "name": "nofile",
+        "softLimit": 65535,
+        "hardLimit": 65535
+      }
+    ],
+    "portMappings": [
+      {
+        "hostPort": 80,
+        "protocol": "tcp",
+        "containerPort": 9000
+      }
+    ],
+    "environment": [
+      {
+        "name": "SONARQUBE_JDBC_USERNAME",
+        "value": "${sonarqube_jdbc_username}"
+      },
+      {
+        "name": "SONARQUBE_JDBC_PASSWORD",
+        "value": "${sonarqube_jdbc_password}"
+      },
+      {
+        "name": "SONARQUBE_JDBC_URL",
+        "value":"${sonarqube_jdbc_url}"
+      }
+    ],
+    "command": [
+      "-Dsonar.search.javaAdditionalOpts=-Dnode.store.allow_mmapfs=false"
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-stream-prefix": "sonarqube",
+        "awslogs-group": "${log_group_sonarqube}",
+        "awslogs-region": "eu-west-2"
+        }
+      }
+  }
+]

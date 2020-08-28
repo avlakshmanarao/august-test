@@ -1,0 +1,2 @@
+sudo apt install ntpdate
+sudo ntpdate -sb time.nist.gov
